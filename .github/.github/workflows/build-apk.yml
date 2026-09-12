@@ -1,0 +1,42 @@
+name: Build Antivirus001 APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar proyecto
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install buildozer cython
+
+      - name: Instalar paquetes del sistema
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            git zip unzip openjdk-17-jdk \
+            autoconf automake libtool pkg-config \
+            zlib1g-dev libncurses5-dev \
+            libncursesw5-dev cmake \
+            libffi-dev libssl-dev
+
+      - name: Compilar APK
+        run: |
+          buildozer -v android debug
+
+      - name: Subir APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Antivirus001
+          path: bin/*.apk
