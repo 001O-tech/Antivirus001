@@ -1,4 +1,4 @@
-name: Build Antivirus001
+name: Antivirus001 Build
 
 on:
   workflow_dispatch:
