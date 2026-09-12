@@ -1,4 +1,4 @@
-name: Build Antivirus001 APK
+name: Build Antivirus001
 
 on:
   workflow_dispatch:
